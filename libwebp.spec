@@ -1,18 +1,20 @@
 %define major 4
-
-%define	libname %mklibname webp %major
-%define	devellibname %mklibname -d webp
+%define libname %mklibname webp %{major}
+%define devname %mklibname -d webp
 
 Name:		libwebp
 Version:	0.2.1
-Release:	1
-Group:		Development/C
-URL:		http://webmproject.org/
+Release:	2
 Summary:	Library and tools for the WebP graphics format
+Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
+URL:		http://webmproject.org/
 Source0:	http://webp.googlecode.com/files/%{name}-%{version}.tar.gz
-BuildRequires:	jpeg-devel libpng-devel libtool swig
+BuildRequires:	libtool
+BuildRequires:	swig
+BuildRequires:	jpeg-devel
+BuildRequires:	pkgconfig(libpng)
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -20,6 +22,8 @@ photographic images. WebP consists of a codec based on VP8, and a
 container based on RIFF. Webmasters, web developers and browser
 developers can use WebP to compress, archive and distribute digital
 images more efficiently.
+
+#----------------------------------------------------------------------------
 
 %package tools
 Group:		Development/Other
@@ -31,6 +35,12 @@ photographic images. WebP consists of a codec based on VP8, and a
 container based on RIFF. Webmasters, web developers and browser
 developers can use WebP to compress, archive and distribute digital
 images more efficiently.
+
+%files tools
+%{_bindir}/*
+%{_mandir}/man*/*
+
+#----------------------------------------------------------------------------
 
 %package -n	%{libname}
 Group:		Development/C
@@ -44,17 +54,30 @@ container based on RIFF. Webmasters, web developers and browser
 developers can use WebP to compress, archive and distribute digital
 images more efficiently.
 
-%package -n	%{devellibname}
+%files -n %{libname}
+%{_libdir}/%{name}*.so.%{major}*
+
+#----------------------------------------------------------------------------
+
+%package -n	%{devname}
 Group:		Development/C
 Summary:	Development files for libwebp, a library for the WebP format
 Requires:	%{libname} = %{version}-%{release}
 
-%description -n %{devellibname}
+%description -n %{devname}
 WebP is an image format that does lossy compression of digital
 photographic images. WebP consists of a codec based on VP8, and a
 container based on RIFF. Webmasters, web developers and browser
 developers can use WebP to compress, archive and distribute digital
 images more efficiently.
+
+%files -n %{devname}
+%doc README PATENTS COPYING NEWS AUTHORS
+%{_libdir}/%{name}*.so
+%{_includedir}/*
+%{_libdir}/pkgconfig/*
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -q
@@ -71,15 +94,3 @@ mkdir -p m4
 %makeinstall_std
 find "%{buildroot}/%{_libdir}" -type f -name "*.la" -delete
 
-%files tools
-%{_bindir}/*
-%{_mandir}/man*/*
-
-%files -n %{libname}
-%doc README PATENTS COPYING NEWS AUTHORS
-%{_libdir}/%{name}*.so.%{major}*
-
-%files -n %{devellibname}
-%{_libdir}/%{name}*.so
-%{_includedir}/*
-%{_libdir}/pkgconfig/*
