@@ -3,8 +3,8 @@
 %define devname %mklibname -d webp
 
 Name:		libwebp
-Version:	0.2.1
-Release:	2
+Version:	0.3.0
+Release:	1
 Summary:	Library and tools for the WebP graphics format
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details

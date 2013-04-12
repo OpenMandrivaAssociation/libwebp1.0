@@ -1,2 +1,4 @@
+removed_sources:
+  libwebp-0.2.1.tar.gz: fd0042dffd67786f5048f6306466c45174e39562
 sources:
-  "libwebp-0.2.1.tar.gz": fd0042dffd67786f5048f6306466c45174e39562
+  libwebp-0.3.0.tar.gz: a20acf2f180d3eae77e24a63371b01fa412fa2f1
