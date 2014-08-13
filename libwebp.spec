@@ -1,16 +1,16 @@
-%define major 4
+%define major 5
 %define libname %mklibname webp %{major}
 %define devname %mklibname -d webp
 
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
-Version:	0.3.1
-Release:	7
+Version:	0.4.1
+Release:	1
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
 Url:		http://webmproject.org/
-Source0:	http://webp.googlecode.com/files/%{name}-%{version}.tar.gz
+Source0:	http://downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
 BuildRequires:	libtool
 BuildRequires:	swig
 BuildRequires:	jpeg-devel
@@ -77,12 +77,13 @@ This package includes the development files for %{name}.
 
 %prep
 %setup -q
-find . -perm 0640 | xargs chmod 0644
 
 %build
-%configure2_5x --disable-static 
+%ifarch aarch64
+export CFLAGS="%{optflags} -frename-registers"
+%endif
+%configure --disable-static
 %make
 
 %install
 %makeinstall_std
-
