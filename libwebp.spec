@@ -4,13 +4,14 @@
 
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
-Version:	0.4.1
-Release:	2
+Version:	0.4.3
+Release:	1
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
 Url:		http://webmproject.org/
-Source0:	http://downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
+# https://chromium.googlesource.com/webm/libwebp/+/v0.4.3
+Source0:	https://chromium.googlesource.com/webm/libwebp/+archive/326b5fb863a43ab8cb225bca913e9025f727f078.tar.gz
 BuildRequires:	libtool
 BuildRequires:	swig
 BuildRequires:	jpeg-devel
@@ -76,7 +77,8 @@ This package includes the development files for %{name}.
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q
+%setup -qc %{name}-%{version}
+./autogen.sh
 
 %build
 %ifarch aarch64
