@@ -71,7 +71,7 @@ Requires:	%{libname} = %{version}-%{release}
 Requires:	%mklibname webpmux 2
 Requires:	%mklibname webpdemux 2
 Requires:	%mklibname webpdecoder 2
-Requires:	%mklibname webpextras 2
+Requires:	%mklibname webpextras 0
 Provides:	webp-devel = %{version}-%{release}
 
 %description -n %{devname}
