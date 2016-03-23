@@ -5,7 +5,7 @@
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	0.5.0
-Release:	1
+Release:	2
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -57,12 +57,21 @@ images more efficiently.
 %files -n %{libname}
 %{_libdir}/%{name}.so.%{major}*
 
+%libpackage webpmux 2
+%libpackage webpdemux 2
+%libpackage webpdecoder 2
+%libpackage webpextras 0
+
 #----------------------------------------------------------------------------
 
 %package -n	%{devname}
 Group:		Development/C
 Summary:	Development files for libwebp, a library for the WebP format
 Requires:	%{libname} = %{version}-%{release}
+Requires:	%mklibname webpmux 2
+Requires:	%mklibname webpdemux 2
+Requires:	%mklibname webpdecoder 2
+Requires:	%mklibname webpextras 2
 Provides:	webp-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -84,7 +93,11 @@ This package includes the development files for %{name}.
 %ifarch aarch64
 export CFLAGS="%{optflags} -frename-registers"
 %endif
-%configure --disable-static
+%configure --disable-static \
+	--enable-libwebpmux \
+	--enable-libwebpdemux \
+	--enable-libwebpdecoder \
+	--enable-libwebpextras
 %make
 
 %install
