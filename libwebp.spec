@@ -57,7 +57,7 @@ images more efficiently.
 %files -n %{libname}
 %{_libdir}/%{name}.so.%{major}*
 
-%libpackage webpmux 3
+%libpackage webpmux 2
 %libpackage webpdemux 2
 %libpackage webpdecoder 3
 
