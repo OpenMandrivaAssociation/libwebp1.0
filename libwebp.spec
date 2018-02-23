@@ -57,7 +57,7 @@ images more efficiently.
 %files -n %{libname}
 %{_libdir}/%{name}.so.%{major}*
 
-%libpackage webpmux 2
+%libpackage webpmux 3
 %libpackage webpdemux 2
 %libpackage webpdecoder 3
 
@@ -67,9 +67,9 @@ images more efficiently.
 Group:		Development/C
 Summary:	Development files for libwebp, a library for the WebP format
 Requires:	%{libname} = %{version}-%{release}
-Requires:	%mklibname webpmux 2
+Requires:	%mklibname webpmux 3
 Requires:	%mklibname webpdemux 2
-Requires:	%mklibname webpdecoder 2
+Requires:	%mklibname webpdecoder 3
 Requires:	%mklibname webpextras 0
 Provides:	webp-devel = %{version}-%{release}
 
