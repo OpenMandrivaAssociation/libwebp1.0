@@ -90,7 +90,7 @@ This package includes the development files for %{name}.
 
 %prep
 %setup -qc %{name}-%{version}
-%apply_patches
+%autopatch -p1
 ./autogen.sh
 
 %build
