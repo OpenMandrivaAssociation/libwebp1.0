@@ -1,10 +1,11 @@
 %define major 7
 %define libname %mklibname webp %{major}
 %define devname %mklibname -d webp
+%define _disable_lto %nil
 
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
-Version:	1.0.3
+Version:	1.1.0
 Release:	1
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
@@ -15,10 +16,16 @@ Url:		http://webmproject.org/
 # https://chromium.googlesource.com/webm/libwebp/+/%{version}
 Source0:	https://chromium.googlesource.com/webm/libwebp/+archive/%{version}.tar.gz
 Patch0:		libwebp-0.6.1-install-extras-lib.patch
+Patch1:		libwebp-freeglut.patch
 BuildRequires:	libtool
 BuildRequires:	swig
-BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(glut)
+BuildRequires:	jpeg-devel
+BuildRequires:	png-devel
+BuildRequires:	giflib-devel
+BuildRequires:	tiff-devel
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -97,12 +104,8 @@ This package includes the development files for %{name}.
 %ifarch aarch64
 export CFLAGS="%{optflags} -frename-registers"
 %endif
-%configure --disable-static \
-	--enable-libwebpmux \
-	--enable-libwebpdemux \
-	--enable-libwebpdecoder \
-	--enable-libwebpextras
-%make
+%cmake
+%make_build
 
 %install
-%makeinstall_std
+%make_install -C build
