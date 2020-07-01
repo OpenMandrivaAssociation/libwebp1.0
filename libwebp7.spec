@@ -2,10 +2,10 @@
 %define libname %mklibname webp %{major}
 %define devname %mklibname -d webp
 
-Summary:	Library and tools for the WebP graphics format
-Name:		libwebp
+Summary:	Old version of the WebP library
+Name:		libwebp7
 Version:	1.0.3
-Release:	1
+Release:	2
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -29,26 +29,9 @@ images more efficiently.
 
 #----------------------------------------------------------------------------
 
-%package tools
-Group:		Development/Other
-Summary:	The WebP command line tools
-
-%description tools
-WebP is an image format that does lossy compression of digital
-photographic images. WebP consists of a codec based on VP8, and a
-container based on RIFF. Webmasters, web developers and browser
-developers can use WebP to compress, archive and distribute digital
-images more efficiently.
-
-%files tools
-%{_bindir}/*
-%{_mandir}/man1/*
-
-#----------------------------------------------------------------------------
-
 %package -n	%{libname}
 Group:		Development/C
-Summary:	Library for the WebP format
+Summary:	Library for the WebP format (Old version)
 
 %description -n %{libname}
 WebP is an image format that does lossy compression of digital
@@ -58,7 +41,7 @@ developers can use WebP to compress, archive and distribute digital
 images more efficiently.
 
 %files -n %{libname}
-%{_libdir}/%{name}.so.%{major}*
+%{_libdir}/libwebp.so.%{major}*
 
 %libpackage webpmux 3
 %libpackage webpdemux 2
@@ -67,30 +50,8 @@ images more efficiently.
 
 #----------------------------------------------------------------------------
 
-%package -n	%{devname}
-Group:		Development/C
-Summary:	Development files for libwebp, a library for the WebP format
-Requires:	%{libname} = %{version}-%{release}
-Requires:	%mklibname webpmux 3
-Requires:	%mklibname webpdemux 2
-Requires:	%mklibname webpdecoder 3
-Requires:	%mklibname webpextras 0
-Provides:	webp-devel = %{version}-%{release}
-
-%description -n %{devname}
-This package includes the development files for %{name}.
-
-%files -n %{devname}
-%doc README PATENTS COPYING NEWS AUTHORS
-%{_libdir}/%{name}*.so
-%{_includedir}/*
-%{_libdir}/pkgconfig/*
-
-#----------------------------------------------------------------------------
-
 %prep
-%setup -qc %{name}-%{version}
-%autopatch -p1
+%autosetup -p1 -c libwebp-%{version}
 ./autogen.sh
 
 %build
@@ -102,7 +63,15 @@ export CFLAGS="%{optflags} -frename-registers"
 	--enable-libwebpdemux \
 	--enable-libwebpdecoder \
 	--enable-libwebpextras
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
+
+# No -devel stuff or tools for compat libraries -- we get them
+# from the current version (libwebp package)
+rm -rf %{buildroot}%{_includedir} \
+	%{buildroot}%{_libdir}/*.so \
+	%{buildroot}%{_bindir} \
+	%{buildroot}%{_libdir}/pkgconfig \
+	%{buildroot}%{_datadir}
