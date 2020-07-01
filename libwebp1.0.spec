@@ -3,7 +3,7 @@
 %define devname %mklibname -d webp
 
 Summary:	Old version of the WebP library
-Name:		libwebp7
+Name:		libwebp1.0
 Version:	1.0.3
 Release:	2
 Group:		Development/C
