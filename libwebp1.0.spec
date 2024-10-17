@@ -9,7 +9,7 @@ Release:	2
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
-Url:		http://webmproject.org/
+Url:		https://webmproject.org/
 # https://chromium.googlesource.com/webm/libwebp/
 # Take the last commit from the right branch --
 # https://chromium.googlesource.com/webm/libwebp/+/%{version}
